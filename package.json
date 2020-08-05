@@ -6,8 +6,17 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "release": "cd android && ./gradlew installRelease",
+    "apk": "cd android && ./gradlew assembleRelease",
+    "rename": "node ./bin/rename.js",
+    "clean-android": "cd android && ./gradlew clean && cd ..",
+    "clean-npm": "watchman watch-del-all && npm start --reset-cache",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx"
+    "lint": "eslint . --ext .js,.jsx",
+    "assembleRelease": "npm run bundle && cd android && ./gradlew --stacktrace assembleRelease",
+    "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.bundle --assets-dest android/app/src/main/res",
+    "installRelease": "npm run uninstallRelease; npm run bundle && cd android && ./gradlew --stacktrace installRelease",
+    "uninstallRelease": "adb shell pm uninstall com.unchained.leevry"
   },
   "dependencies": {
     "@eva-design/eva": "2.0.0",
