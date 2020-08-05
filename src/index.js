@@ -14,12 +14,13 @@ import {store} from './redux/store';
 
 // Imports: Main Navigation
 import {CountriesListScreen} from './screens/Countries/ListScreen';
+import {CountryDetailsScreen} from './screens/Countries/DetailsScreen';
 
 export default () => (
   <Provider store={store}>
     <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={eva.light}>
-      <CountriesListScreen />
+      <CountryDetailsScreen />
     </ApplicationProvider>
   </Provider>
 );

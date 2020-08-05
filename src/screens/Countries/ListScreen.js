@@ -11,9 +11,9 @@ import {
   Avatar,
   List,
 } from '@ui-kitten/components';
+import {SvgUri} from 'react-native-svg';
 
 import countriesActions from '../../redux/countries/actions';
-import {Image} from 'react-native-svg';
 
 export const CountriesListScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -32,24 +32,23 @@ export const CountriesListScreen = ({navigation}) => {
   const renderItemButton = (props) => <Button size="tiny">Detail</Button>;
 
   const renderItemIcon = (imageSrc) => (props) => {
-    return <Image style={styles.imageItem} source={imageSrc} />;
+    return <SvgUri width="20%" height={40} uri={imageSrc} />;
   };
 
   const renderItem = ({item, index}) => (
     <ListItem
       title={item.name}
       description={item.capital}
-      accessoryLeft={renderItemIcon(item.flag)}
+      // accessoryLeft={renderItemIcon(item.flag)}
       accessoryRight={renderItemButton}
     />
   );
 
   return (
     <SafeAreaView>
-      <TopNavigation title="MyApp" alignment="center" />
+      <TopNavigation title="Countries List" alignment="center" />
       <Divider />
       <Layout>
-        <Image style={styles.imageItem} source="https://restcountries.eu/data/dza.svg" />
         <List style={styles.container} data={list} renderItem={renderItem} />
       </Layout>
     </SafeAreaView>
