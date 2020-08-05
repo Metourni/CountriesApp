@@ -5,6 +5,7 @@ import {
   Icon,
   Layout,
   StyleService,
+  Text,
   TopNavigation,
   TopNavigationAction,
   useStyleSheet,
@@ -12,8 +13,7 @@ import {
 import {SvgUri} from 'react-native-svg';
 
 import {CountryInfoItemComponent} from '../../components/CountryInfoItemComponent';
-
-const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
+import {PinIcon, BackIcon} from '../../components/icons';
 
 export const CountryDetailsScreen = ({route, navigation}) => {
   const styles = useStyleSheet(themedStyles);
@@ -29,7 +29,7 @@ export const CountryDetailsScreen = ({route, navigation}) => {
   );
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
       <TopNavigation
         title="Country details"
         alignment="center"
@@ -40,13 +40,16 @@ export const CountryDetailsScreen = ({route, navigation}) => {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         <Layout style={styles.topSection} level="1">
-          <SvgUri
-            width="80"
-            height="80"
-            uri={country.flag}
-          />
           <View style={styles.nameSection}>
-            <CountryInfoItemComponent style={styles.setting} value={country.name} />
+            <Text style={styles.countryName} category="h4">
+              {country.name}
+            </Text>
+            <View style={styles.capitalContainer}>
+              <PinIcon style={{width: 20, height: 20}} fill="#8F9BB3" />
+              <Text style={styles.capital} category="s1">
+                {country.capital}
+              </Text>
+            </View>
           </View>
         </Layout>
         <CountryInfoItemComponent
@@ -90,8 +93,10 @@ export const CountryDetailsScreen = ({route, navigation}) => {
 };
 
 const themedStyles = StyleService.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
-    // flex: 1,
     backgroundColor: 'background-basic-color-2',
   },
   contentContainer: {
@@ -105,6 +110,17 @@ const themedStyles = StyleService.create({
   nameSection: {
     flex: 1,
     marginHorizontal: 8,
+    marginVertical: 8,
+  },
+  countryName: {
+    paddingVertical: 10,
+  },
+  capitalContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  capital: {
+    // marginHorizontal: 8,
   },
   setting: {
     padding: 16,
