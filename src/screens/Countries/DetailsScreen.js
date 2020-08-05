@@ -2,7 +2,6 @@ import React from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {
   Divider,
-  Icon,
   Layout,
   StyleService,
   Text,
@@ -10,7 +9,6 @@ import {
   TopNavigationAction,
   useStyleSheet,
 } from '@ui-kitten/components';
-import {SvgUri} from 'react-native-svg';
 
 import {CountryInfoItemComponent} from '../../components/CountryInfoItemComponent';
 import {PinIcon, BackIcon} from '../../components/icons';

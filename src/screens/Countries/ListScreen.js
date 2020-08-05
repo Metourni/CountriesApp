@@ -11,20 +11,28 @@ import {
   Spinner,
   List,
   Text,
+  TopNavigationAction,
 } from '@ui-kitten/components';
 import {SvgUri} from 'react-native-svg';
 
 import countriesActions from '../../redux/countries/actions';
 
-import {RefreshIcon} from '../../components/icons';
+import {SearchIcon, RefreshIcon} from '../../components/icons';
+import {CountrySearchModalComponent} from '../../components/CountrySearchModalComponent';
 
 export const CountriesListScreen = ({navigation}) => {
   const dispatch = useDispatch();
+
+  const [showModal, setShowModal] = React.useState(false);
 
   const {loading, error, list} = useSelector((state) => state.countries);
 
   const fetchCountries = () => {
     dispatch({type: countriesActions.GET_ALL});
+  };
+
+  const fetchCountriesByName = (value) => {
+    dispatch({type: countriesActions.SEARCH_BY_NAME, payload: {q: value}});
   };
 
   useEffect(() => {
@@ -59,10 +67,17 @@ export const CountriesListScreen = ({navigation}) => {
     />
   );
 
-  console.log(error);
+  const SearchAction = () => (
+    <TopNavigationAction icon={SearchIcon} onPress={() => setShowModal(true)} />
+  );
+
   return (
     <SafeAreaView style={styles.container}>
-      <TopNavigation title="Countries List" alignment="center" />
+      <TopNavigation
+        title="Countries List"
+        alignment="center"
+        accessoryRight={SearchAction}
+      />
       <Divider />
       <React.Fragment>
         {loading ? (
@@ -87,6 +102,14 @@ export const CountriesListScreen = ({navigation}) => {
           </Layout>
         ) : null}
       </React.Fragment>
+      <CountrySearchModalComponent
+        visible={showModal}
+        onSearch={(q) => {
+          fetchCountriesByName(q);
+          setShowModal(false);
+        }}
+        setVisible={setShowModal}
+      />
     </SafeAreaView>
   );
 };

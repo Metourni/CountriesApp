@@ -6,7 +6,8 @@ Version Betta
 ## Features
 
 ## Perspectives
-- search
+- Search
+- Pagination
 
 ## Env
 
@@ -112,6 +113,14 @@ or
   ```bash
     cd android && ./gradlew assembleRelease
   ```
+  or 
+  ```bash
+    npm run apk
+  ```
+  or 
+  ```bash
+    yarn apk
+  ```
 
 5. If error check this:
     If you you got: Error: Duplicate resources check this solution
@@ -122,7 +131,7 @@ or
   
   ```bash
     cd android && ./gradlew bundleRelease
-  ```
+  ```  
 
 7. Testing the release build of your app
 
