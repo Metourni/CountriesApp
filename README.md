@@ -6,8 +6,8 @@ Version Betta
 ## Features
 
 ## Perspectives
-- Search
 - Pagination
+- More filters
 
 ## Env
 
