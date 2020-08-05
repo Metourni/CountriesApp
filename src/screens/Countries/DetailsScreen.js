@@ -15,8 +15,10 @@ import {CountryInfoItemComponent} from '../../components/CountryInfoItemComponen
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
-export const CountryDetailsScreen = ({navigation}) => {
+export const CountryDetailsScreen = ({route, navigation}) => {
   const styles = useStyleSheet(themedStyles);
+
+  const {country} = route.params;
 
   const navigateBack = () => {
     navigation.goBack();
@@ -41,46 +43,46 @@ export const CountryDetailsScreen = ({navigation}) => {
           <SvgUri
             width="80"
             height="80"
-            uri="https://restcountries.eu/data/usa.svg"
+            uri={country.flag}
           />
           <View style={styles.nameSection}>
-            <CountryInfoItemComponent style={styles.setting} value="Algeria" />
+            <CountryInfoItemComponent style={styles.setting} value={country.name} />
           </View>
         </Layout>
         <CountryInfoItemComponent
           style={[styles.setting, styles.newSection]}
           hint="Code"
-          value="DZD"
+          value={country.alpha2Code}
         />
         <CountryInfoItemComponent
           style={[styles.setting]}
           hint="Numeric Code"
-          value="012"
+          value={country.numericCode}
         />
         <CountryInfoItemComponent
           style={[styles.setting, styles.newSection]}
           hint="Capital"
-          value="Algiers"
+          value={country.capital}
         />
         <CountryInfoItemComponent
           style={styles.setting}
           hint="Region"
-          value="Africa"
+          value={country.region}
         />
         <CountryInfoItemComponent
           style={styles.setting}
           hint="Sub-region"
-          value="NorthAfrica"
+          value={country.subregion}
         />
         <CountryInfoItemComponent
           style={styles.setting}
           hint="Population"
-          value={234234}
+          value={country.population}
         />
         <CountryInfoItemComponent
           style={styles.setting}
-          hint="NativeName"
-          value={'الجزائر'}
+          hint="Native Name"
+          value={country.nativeName}
         />
       </ScrollView>
     </SafeAreaView>

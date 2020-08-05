@@ -9,8 +9,8 @@ const Stack = createStackNavigator();
 
 const HomeNavigator = () => (
   <Stack.Navigator headerMode="none">
-    <Stack.Screen name="Home" component={CountriesListScreen} />
-    <Stack.Screen name="Details" component={CountryDetailsScreen} />
+    <Stack.Screen name="CountriesList" component={CountriesListScreen} />
+    <Stack.Screen name="CountryDetails" component={CountryDetailsScreen} />
   </Stack.Navigator>
 );
 

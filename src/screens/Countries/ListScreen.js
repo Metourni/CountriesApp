@@ -1,35 +1,50 @@
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {
   Button,
   Divider,
   Layout,
   TopNavigation,
   ListItem,
-  Avatar,
+  Spinner,
   List,
+  Text,
 } from '@ui-kitten/components';
 import {SvgUri} from 'react-native-svg';
 
 import countriesActions from '../../redux/countries/actions';
+
+import {RefreshIcon} from '../../components/icons';
 
 export const CountriesListScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const {loading, error, list} = useSelector((state) => state.countries);
 
-  useEffect(() => {
+  const fetchCountries = () => {
     dispatch({type: countriesActions.GET_ALL});
+  };
+
+  useEffect(() => {
+    // load data on component mount
+    fetchCountries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const navigateDetails = () => {
-    navigation.navigate('Details');
+  const navigateDetails = (index) => {
+    const data = {
+      country: list[index],
+    };
+    navigation.navigate('CountryDetails', data);
   };
 
-  const renderItemButton = (props) => <Button size="tiny">Detail</Button>;
+  const renderItemButton = (index) => (props) => (
+    <Button size="tiny" onPress={() => navigateDetails(index)}>
+      Detail
+    </Button>
+  );
 
   const renderItemIcon = (imageSrc) => (props) => {
     return <SvgUri width="20%" height={40} uri={imageSrc} />;
@@ -40,24 +55,73 @@ export const CountriesListScreen = ({navigation}) => {
       title={item.name}
       description={item.capital}
       // accessoryLeft={renderItemIcon(item.flag)}
-      accessoryRight={renderItemButton}
+      accessoryRight={renderItemButton(index)}
     />
   );
 
+  console.log(error);
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <TopNavigation title="Countries List" alignment="center" />
       <Divider />
-      <Layout>
-        <List style={styles.container} data={list} renderItem={renderItem} />
-      </Layout>
+      <React.Fragment>
+        {loading ? (
+          <Layout style={styles.spinnerLayout}>
+            <Spinner style={styles.spinner} />
+          </Layout>
+        ) : null}
+        {!loading && list && !error ? (
+          <List data={list} renderItem={renderItem} />
+        ) : null}
+        {!loading && error ? (
+          <Layout style={styles.container}>
+            <Text style={styles.text} category="s1">
+              {error}
+            </Text>
+            <Button
+              style={styles.likeButton}
+              accessoryLeft={RefreshIcon}
+              onPress={fetchCountries}>
+              Try again
+            </Button>
+          </Layout>
+        ) : null}
+      </React.Fragment>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // maxHeight: 192,
+    flex: 1,
+    justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  viewContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    // alignItems: 'stretch',
+    // paddingTop: 100,
+  },
+  spinnerLayout: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner: {
+    // marginTop: 40,
+  },
+  list: {
+    // flex:1
+  },
+
+  text: {
+    textAlign: 'center',
+  },
+  likeButton: {
+    marginVertical: 16,
+    marginHorizontal: 30,
   },
   imageItem: {
     width: 40,

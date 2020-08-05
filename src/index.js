@@ -1,11 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
-import {
-  ApplicationProvider,
-  IconRegistry,
-  Layout,
-} from '@ui-kitten/components';
+import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 
@@ -13,22 +8,15 @@ import * as eva from '@eva-design/eva';
 import {store} from './redux/store';
 
 // Imports: Main Navigation
+import {AppNavigator} from './navigation';
 import {CountriesListScreen} from './screens/Countries/ListScreen';
-import {CountryDetailsScreen} from './screens/Countries/DetailsScreen';
+// import {CountryDetailsScreen} from './screens/Countries/DetailsScreen';
 
 export default () => (
   <Provider store={store}>
     <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={eva.light}>
-      <CountryDetailsScreen />
+      <AppNavigator />
     </ApplicationProvider>
   </Provider>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
